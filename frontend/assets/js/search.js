@@ -48,5 +48,31 @@ $(document).ready(async function () {
     },
   });
 
-  
+  $('#btnSearch').click(async function () {
+    let deparature = $('#departure').find(':selected').val();
+    let destination = $('#destination').find(':selected').val();
+    let date = $('#datepicker').datepicker('getDate');
+
+    date = date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
+
+    let url = `/list?startPoint=${deparature}&endPoint=${destination}&startTime=${date}`;
+
+    $.ajax(`${BACKEND_URL}/bus/search`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      data: JSON.stringify({
+        startPoint: deparature,
+        endPoint: destination,
+        page: 0,
+        limit: 100,
+        startTime: date,
+      }),
+      success: function (data) {
+        console.log('data ', data);
+      },
+    });
+    $(location).attr('href', url);
+  });
 });
