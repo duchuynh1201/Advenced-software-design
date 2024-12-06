@@ -69,7 +69,140 @@ $(document).ready(async function () {
   function numberWithThoundsand(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   }
+  async function loadMore(reset = false) {
+    const checkAuthen = await isAuthenticated();
+    console.log(checkAuthen);
+    const template = await `<div class='mb-4 card bus-ticket'>
+    <div class='card-body'>
+      <div class='row'>
+        <div class='col-md-3'>
+          <img
+            src="{{image_url}}"
+            class='img-fluid rounded'
+            alt='...'
+          />
+        </div>
+        <div class='col-md-9'>
+          <div class='row'>
+            <div class='col-md-9'>
+              <h5 class='card-title fw-bold text-black-40'>
+                {{bus_operator_name}}
+                <span class='ml-2 badge text-bg-warning'>{{bus_operator_rating}}*</span>
+              </h5>
   
+              <div class='row'>
+                <div class='col-md-6'>
+                  <h5 class='text-success'>{{start_point_time}}</h5>
+                  <p class='text-black-50 mb-0'>{{start_point_date}}</p>
+                  <p class='text-black-50 fw-bold'>{{start_point_name}}</p>
+                </div>
+                <div class='col-md-6'>
+                  <h5 class='text-success'>{{end_point_time}}</h5>
+                  <p class='text-black-50 mb-0'>{{end_point_date}}</p>
+                  <p class='text-black-50 fw-bold'>{{end_point_name}}</p>
+                </div>
+              </div>
+            </div>
+            <div class='col-md-3 text-end'>
+              <h5 class='fw-bold text-primary'>{{price}} đ</h5>
+              <p class='mb-0'>
+                <small class='text-muted'>{{left_seats}} seats available</small>
+              </p>
+            </div>
+          </div>
+  
+          <div
+            class='mt-3 d-flex align-items-center justify-content-between'
+          >
+            <div>
+              <button
+                type='button'
+                class='btn btn-success'
+                data-bs-toggle='modal'
+                data-bs-target='#exampleModal'
+                onclick="viewDetail(\'{{id}}\', {{bus_operator_rating}})"
+              >
+                Details
+              </button>
+            </div>
+            <div>
+              <span class='text-primary fw-bold'>{{duration}}</span><span
+                class='text-black-50'
+              > | </span><span class='text-primary fw-bold'>{{type}}</span>
+            </div>
+            <div>
+              <button type='button' class='btn btn-primary book-bus book-btn' bid='{{id}}' ${checkAuthen ? '' : 'disabled'} >
+                Book
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+    const templateScript = Handlebars.compile(template);
+    let html = '';
+    //  (0 - Limousine, 1 - Normal Seat, 2 - Sleeper Bus)
+    const busTypeText = ['Limousine', 'Normal Seat', 'Sleeper Bus'];
+    const busOperator = $('#filter-bus-operator').val();
+    const busType = $('[name="typeOfSeat"]:checked').val();
+    const price = $('#filter-pricing').val();
+    const deparature = getUrlParameter('startPoint');
+    const destination = getUrlParameter('endPoint');
+    const date = getUrlParameter('startTime');
+
+    if (page == 0) {
+      $('#load-more').show();
+    }
+
+    $.post(
+      `${BACKEND_URL}/bus/search`,
+      {
+        startPoint: deparature,
+        endPoint: destination,
+        page,
+        limit: 10,
+        boId: busOperator === '' ? undefined : busOperator,
+        type: parseInt(busType),
+        price: parseInt(price),
+        startTime: date,
+      },
+      function (data) {
+        loadingContent = false;
+        if (data.data.length === 0 && reset === false) {
+          $('#load-more').hide();
+          return;
+        }
+        for (const item of data.data) {
+          let duration = (new Date(item.end_time) - new Date(item.start_time)) / 1000;
+          html += templateScript({
+            id: item.id,
+            image_url: item.image_url,
+            bus_operator_name: item.bus_operators.name,
+            bus_operator_rating: Math.round(item.averageReviews * 100) / 100,
+            start_point_time: new Date(item.start_time).getHours() + ':' + new Date(item.start_time).getSeconds(),
+            start_point_date: new Date(item.start_time).toISOString().split('T')[0],
+            start_point_name: item.start_point.name,
+            end_point_time: new Date(item.end_time).getHours() + ':' + new Date(item.end_time).getSeconds(),
+            end_point_date: new Date(item.end_time).toISOString().split('T')[0],
+            end_point_name: item.end_point.name,
+            left_seats: item.left_seats,
+            price: numberWithThoundsand(item.price),
+            duration: secondsToHms(duration),
+            type: busTypeText[item.type],
+          });
+        }
+
+        if (page === 0) {
+          $('#list-of-buses-div').html(html);
+        } else {
+          $('#list-of-buses-div').append(html);
+        }
+      }
+    );
+  }
+
+  await loadMore();
 
   // if (!(await isAuthenticated())) {
   //   console.log('1');
