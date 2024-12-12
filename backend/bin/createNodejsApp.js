@@ -25,6 +25,34 @@ async function hasYarn() {
   }
 }
 
+// Validate arguments
+if (process.argv.length < 3) {
+  console.log('Please specify the target project directory.');
+  console.log('For example:');
+  console.log('    npx create-nodejs-app my-app');
+  console.log('    OR');
+  console.log('    npm init nodejs-app my-app');
+  process.exit(1);
+}
+
+// Define constants
+const ownPath = process.cwd();
+const folderName = process.argv[2];
+const appPath = path.join(ownPath, folderName);
+const repo = 'https://github.com/hagopj13/node-express-boilerplate.git';
+
+// Check if directory already exists
+try {
+  fs.mkdirSync(appPath);
+} catch (err) {
+  if (err.code === 'EEXIST') {
+    console.log('Directory already exists. Please choose another name for the project.');
+  } else {
+    console.log(err);
+  }
+  process.exit(1);
+}
+
 async function setup() {
   try {
     // Clone repo
