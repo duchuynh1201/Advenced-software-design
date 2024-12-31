@@ -21,8 +21,9 @@ function loadMore() {
       Accept: 'application/json',
     },
     success: function (data) {
-      if (data.history_list[0]) {
-        currentHistoryData = currentHistoryData.concat(data.history_list);
+      console.log('result:', data);
+      if (data.historyList[0]) {
+        currentHistoryData = currentHistoryData.concat(data.historyList);
         content = `<thead><tr>
     <th scope='col'>#</th>
       <th scope='col'>id</th>
@@ -40,8 +41,8 @@ function loadMore() {
         <td scope='row' width ='2%'>${index + 1}</th>
         <td>${item.id}</td>
         <td>${item.buses.bus_operators.name}</td>
-        <td>${item.buses.bus_stations_bus_stationsTobuses_start_point.name}</td>
-        <td>${item.buses.bus_stations_bus_stationsTobuses_end_point.name}</td>
+        <td>${item.buses.bus_stations_buses_start_pointTobus_stations.name}</td>
+        <td>${item.buses.bus_stations_buses_end_pointTobus_stations.name}</td>
         <td>${item.buses.start_time}</td>
         <td>${item.buses.end_time}</td>
         <td><span class="text-primary"  onclick="viewDetail(${index})" role="button">View</span></td>
@@ -84,9 +85,9 @@ function viewDetail(id) {
     </tr>
     <tr style='min-height: 50px'>
       <th class='quarter-width align-middle'>Start point</th>
-      <td class='quarter-width align-middle'>${detailTicket.buses.bus_stations_bus_stationsTobuses_start_point.name}</td>
+      <td class='quarter-width align-middle'>${detailTicket.buses.bus_stations_buses_start_pointTobus_stations.name}</td>
       <th class='quarter-width align-middle'>End point</th>
-      <td class='quarter-width align-middle'>${detailTicket.buses.bus_stations_bus_stationsTobuses_end_point.name}</td>
+      <td class='quarter-width align-middle'>${detailTicket.buses.bus_stations_buses_end_pointTobus_stations.name}</td>
     </tr>
     <tr style='min-height: 50px'>
       <th class='quarter-width align-middle'>Start time</th>
@@ -185,6 +186,6 @@ async function checkToken() {
     },
   });
   result = await result.json();
-  if (!result?.history_list) return false;
+  if (!result?.historyList) return false;
   return true;
 }

@@ -72,12 +72,12 @@ const getBusById = async (busId) => {
       bus_operators: {
         select: { name: true },
       },
-      bus_stations_bus_stationsTobuses_start_point: {
+      bus_stations_buses_start_pointTobus_stations: {
         select: {
           name: true,
         },
       },
-      bus_stations_bus_stationsTobuses_end_point: {
+      bus_stations_buses_end_pointTobus_stations: {
         select: {
           name: true,
         },
@@ -114,12 +114,12 @@ const busList = async (page, limit, req) => {
           image_url: true,
         },
       },
-      bus_stations_bus_stationsTobuses_start_point: {
+      bus_stations_buses_start_pointTobus_stations: {
         select: {
           name: true,
         },
       },
-      bus_stations_bus_stationsTobuses_end_point: {
+      bus_stations_buses_end_pointTobus_stations: {
         select: {
           name: true,
         },
@@ -205,8 +205,8 @@ const bookingGet = async (bid) => {
     include: {
       buses: {
         include: {
-          bus_stations_bus_stationsTobuses_start_point: true,
-          bus_stations_bus_stationsTobuses_end_point: true,
+          bus_stations_buses_start_pointTobus_stations: true,
+          bus_stations_buses_end_pointTobus_stations: true,
         },
       },
       users: {

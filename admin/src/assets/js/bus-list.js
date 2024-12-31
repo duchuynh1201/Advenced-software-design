@@ -59,12 +59,12 @@ $(document).ready(function () {
         </td>`;
           html +=
             '<td class="align-middle">' +
-            bus.bus_stations_bus_stationsTobuses_start_point.name +
+            bus.bus_stations_buses_start_pointTobus_stations.name +
             "</td>";
 
           html +=
             '<td class="align-middle">' +
-            bus.bus_stations_bus_stationsTobuses_end_point.name +
+            bus.bus_stations_buses_end_pointTobus_stations.name +
             "</td>";
           html += '<td class="align-middle">' + typeOfBus[bus.type] + "</td>";
           // html += `

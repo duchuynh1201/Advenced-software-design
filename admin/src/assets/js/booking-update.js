@@ -19,11 +19,11 @@ $(document).ready(function () {
       $('#phone').val(booking.phone);
       $('#seat').val(booking.seat);
       $('#status').val(booking.status);
-      $('#start_point').val(
-        booking.buses.bus_stations_bus_stationsTobuses_start_point.name
+      $("#start_point").val(
+        booking.buses.bus_stations_buses_start_pointTobus_stations.name
       );
-      $('#end_point').val(
-        booking.buses.bus_stations_bus_stationsTobuses_end_point.name
+      $("#end_point").val(
+        booking.buses.bus_stations_buses_end_pointTobus_stations.name
       );
     },
     error: function (error) {

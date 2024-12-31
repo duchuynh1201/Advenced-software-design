@@ -26,10 +26,10 @@ $(document).ready(function () {
         `<option value = ${bus.bo_id}>${bus.bus_operators.name}</option>`
       );
       $("#Start-Point").html(
-        `<option value = ${bus.start_point}>${bus.bus_stations_bus_stationsTobuses_start_point.name}</option>`
+        `<option value = ${bus.start_point}>${bus.bus_stations_buses_start_pointTobus_stations.name}</option>`
       );
       $("#End-Point").html(
-        `<option value = ${bus.end_point}>${bus.bus_stations_bus_stationsTobuses_end_point.name}</option>`
+        `<option value = ${bus.end_point}>${bus.bus_stations_buses_end_pointTobus_stations.name}</option>`
       );
       let busType = "";
       typeOfBusList.forEach((item) => {

@@ -44,6 +44,7 @@ const USERS = [
     password: Buffer.from('$2a$10$uR5S.P86tXoBfCHl0a03bePKyN/1yE/1oCW5oRNs/IYfbDeL.WY9O'),
     create_time: '2022-03-22T12:26:44.480Z',
     update_time: '2022-08-27T14:43:55.772Z',
+    verification: true,
   },
   {
     id: 'c118f693-8722-4461-a79d-d76991b96afd',
@@ -52,6 +53,7 @@ const USERS = [
     password: Buffer.from('$2a$10$uR5S.P86tXoBfCHl0a03bePKyN/1yE/1oCW5oRNs/IYfbDeL.WY9O'),
     create_time: '2022-03-22T12:26:44.480Z',
     update_time: '2022-08-27T14:43:55.772Z',
+    verification: true,
   },
   {
     id: 'c118f693-8722-4461-a79d-d76991b96acf',
@@ -60,6 +62,7 @@ const USERS = [
     password: Buffer.from('$2a$10$uR5S.P86tXoBfCHl0a03bePKyN/1yE/1oCW5oRNs/IYfbDeL.WY9O'),
     create_time: '2022-03-22T12:26:44.480Z',
     update_time: '2022-08-27T14:43:55.772Z',
+    verification: true,
   },
   {
     id: 'c118f693-8722-4461-a79d-d76991b96fdf',
@@ -68,6 +71,7 @@ const USERS = [
     password: Buffer.from('$2a$10$uR5S.P86tXoBfCHl0a03bePKyN/1yE/1oCW5oRNs/IYfbDeL.WY9O'),
     create_time: '2022-03-22T12:26:44.480Z',
     update_time: '2022-08-27T14:43:55.772Z',
+    verification: true,
   },
   {
     id: 'c118f693-8722-4461-a79d-d76991b96abf',
@@ -76,6 +80,7 @@ const USERS = [
     password: Buffer.from('$2a$10$uR5S.P86tXoBfCHl0a03bePKyN/1yE/1oCW5oRNs/IYfbDeL.WY9O'),
     create_time: '2022-03-22T12:26:44.480Z',
     update_time: '2022-08-27T14:43:55.772Z',
+    verification: true,
   },
 ];
 const BUS_OPERATORS = [];
@@ -159,6 +164,9 @@ async function main() {
   Array.from({ length: 1000 }).forEach(() => {
     REVIEWS.push(createReview());
   });
+
+  console.log('Bus: ', BUSES);
+
   const database = {
     users: USERS,
     bus_operators: BUS_OPERATORS,

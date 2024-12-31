@@ -13,9 +13,10 @@ const searchBus = async (body) => {
     start_point: startPoint,
     end_point: endPoint,
   };
+  // console.log('query: ', startTime);
 
   if (startTime) {
-    console.log('startTime', startTime);
+    // console.log('startTime', startTime);
     const startTimeInDay = new Date(startTime);
     startTimeInDay.setHours(0, 0, 0, 0);
     const endTimeInDay = new Date(startTime);
@@ -30,7 +31,7 @@ const searchBus = async (body) => {
   if (boId) {
     query.bo_id = boId;
   }
-  console.log('type', type);
+  // console.log('type', type);
   if (typeof type === 'number') {
     query.type = type;
   }
@@ -46,16 +47,15 @@ const searchBus = async (body) => {
     where: query,
     include: {
       bus_operators: true,
-      bus_stations_bus_stationsTobuses_end_point: true,
-      bus_stations_bus_stationsTobuses_start_point: true,
+      bus_stations_buses_end_pointTobus_stations: true,
+      bus_stations_buses_start_pointTobus_stations: true,
     },
   });
-
   for (const bus of data) {
-    bus.start_point = bus.bus_stations_bus_stationsTobuses_start_point;
-    bus.end_point = bus.bus_stations_bus_stationsTobuses_end_point;
-    delete bus.bus_stations_bus_stationsTobuses_start_point;
-    delete bus.bus_stations_bus_stationsTobuses_end_point;
+    bus.start_point = bus.bus_stations_buses_start_pointTobus_stations;
+    bus.end_point = bus.bus_stations_buses_end_pointTobus_stations;
+    delete bus.bus_stations_buses_start_pointTobus_stations;
+    delete bus.bus_stations_buses_end_pointTobus_stations;
 
     bus.left_seats =
       bus.num_of_seats -
@@ -86,6 +86,7 @@ const searchBus = async (body) => {
   const count = await prisma.buses.count({
     where: query,
   });
+
   return { count, data };
 };
 
@@ -96,8 +97,8 @@ const getBusInformation = async (busId) => {
     },
     include: {
       bus_operators: true,
-      bus_stations_bus_stationsTobuses_end_point: true,
-      bus_stations_bus_stationsTobuses_start_point: 'end_point',
+      bus_stations_buses_end_pointTobus_stations: true,
+      bus_stations_buses_start_pointTobus_stations: 'end_point',
     },
   });
 

@@ -111,25 +111,25 @@ const wardList = async () => {
 };
 
 const ticketDateList = [
-  new Date('2024-12-11T09:38:41.061Z'), // qua khu,
-  new Date('2024-12-12T09:38:41.061Z'), // qua khu,
-  new Date('2024-12-13T09:38:41.061Z'), // qua khu,
-  new Date('2024-12-14T09:38:41.061Z'), // qua khu,
-  new Date('2024-12-15T09:38:41.061Z'), // qua khu,
+  new Date('2025-01-01T09:38:41.061Z'), // qua khu,
+  new Date('2025-01-02T09:38:41.061Z'), // qua khu,
+  new Date('2025-01-03T09:38:41.061Z'), // qua khu,
+  new Date('2025-01-04T09:38:41.061Z'), // qua khu,
+  new Date('2025-01-05T09:38:41.061Z'), // qua khu,
   // new Date('2023-05-18T09:38:41.061Z'), // tuong lai
 ];
 
 const busDateList = [
-  new Date('2024-12-19T09:38:41.061Z'), // tuong lai
-  new Date('2024-12-20T09:38:41.061Z'), // tuong lai
-  new Date('2024-12-21T09:38:41.061Z'), // tuong lai
-  new Date('2024-12-22T09:38:41.061Z'), // tuong lai
-  new Date('2024-12-23T09:38:41.061Z'), // tuong lai
-  new Date('2024-12-24T09:38:41.061Z'), // tuong lai
-  new Date('2024-12-25T09:38:41.061Z'), // tuong lai
-  new Date('2024-12-26T09:38:41.061Z'), // tuong lai
-  new Date('2024-12-27T09:38:41.061Z'), // tuong lai
-  new Date('2024-12-28T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-01T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-02T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-03T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-04T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-05T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-06T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-07T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-08T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-09T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-10T09:38:41.061Z'), // tuong lai
 ];
 
 // module export

@@ -48,8 +48,8 @@ const getMyQuestions = catchAsync(async (req, res) => {
 });
 
 const getHistoryByUId = catchAsync(async (req, res) => {
-  const history_list = await userService.getHistoryByUId(req);
-  res.send({ history_list });
+  const historyList = await userService.getHistoryByUId(req);
+  res.send({ historyList });
 });
 module.exports = {
   getHistoryByUId,

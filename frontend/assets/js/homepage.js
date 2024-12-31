@@ -102,7 +102,9 @@ $(document).ready(function () {
     response = await response.json();
 
     if (!response) alert('Registerd failed');
-    else if (response.message) alert(response.message);
+    else if (response.message) {
+      alert(response.message);
+    }
     else if (response.user && response.token) {
       alert('Please enter your otp code');
       $('#registerModal').modal('toggle');

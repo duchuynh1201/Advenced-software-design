@@ -16,7 +16,7 @@ const isAuthenticated = async () => {
       });
       response = await response.json();
       if (!response) return false;
-      if (typeof response.history_list === 'undefined' || response.history_list === null) {
+      if (typeof response.historyList === 'undefined' || response.historyList === null) {
         return false;
       }
       return true;
@@ -73,7 +73,7 @@ $(document).ready(async function () {
               minute: 'numeric',
             })
           );
-          $('#destination').val(response.bus_stations_bus_stationsTobuses_end_point.location);
+          $('#destination').val(response.bus_stations_buses_end_pointTobus_stations.location);
         }
       },
       error: function (error) {

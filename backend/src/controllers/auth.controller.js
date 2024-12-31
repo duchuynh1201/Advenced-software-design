@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { authService, userService, tokenService, emailService } = require('../services');
+// const { faker } = require('@faker-js/faker');
 // const sendEmail = require('../utils/sendEmail');
 
 const register = catchAsync(async (req, res) => {
@@ -9,6 +10,7 @@ const register = catchAsync(async (req, res) => {
   // const email = await sendEmail(user, 'Verify email', 'Please check your email');
   // Check otp
   delete user.password;
+  // user.add
   res.status(httpStatus.CREATED).send({ user, token: tokens.access });
 });
 const sendEmail = catchAsync(async (req, res) => {

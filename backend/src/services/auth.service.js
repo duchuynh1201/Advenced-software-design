@@ -1,3 +1,5 @@
+const { PrismaClient } = require('@prisma/client');
+
 const nodemailer = require('nodemailer');
 const httpStatus = require('http-status');
 const bcrypt = require('bcrypt');
@@ -5,8 +7,6 @@ const tokenService = require('./token.service');
 const userService = require('./user.service');
 const Token = require('../models/token.model');
 const ApiError = require('../utils/ApiError');
-
-const { PrismaClient } = require('@prisma/client');
 
 const { tokenTypes } = require('../config/tokens');
 
@@ -93,8 +93,7 @@ const resetPassword = async (email, newPassword, repassword) => {
  */
 const verifyEmail = async (req) => {
   try {
-    const email = req.body.email;
-    const otp = req.body.otp;
+    const { email, otp } = req.body;
     const user = await prisma.users.findFirst({
       where: {
         email,
@@ -124,28 +123,28 @@ const verifyEmail = async (req) => {
   }
 };
 const sendEmail = async (req) => {
-  const email = req.body.email;
-
+  console.log('reqs: ', req.body);
+  const { email } = req.body;
   const user = await prisma.users.findFirst({
     where: {
       email,
     },
   });
 
-  let user_verification = await prisma.user_verification.findFirst({
+  let userVeri = await prisma.user_verification.findFirst({
     where: {
       uid: user.id,
     },
   });
 
-  if (!user_verification || user_verification === {}) {
-    user_verification = await prisma.user_verification.create({
+  if (!userVeri || Object.keys(userVeri).length === 0) {
+    userVeri = await prisma.user_verification.create({
       data: {
         uid: user.id,
       },
     });
   }
-  console.log(user_verification);
+  console.log(userVeri);
 
   try {
     console.log('test 1');
@@ -155,17 +154,17 @@ const sendEmail = async (req) => {
       port: 465,
       secure: true,
       auth: {
-        user: 'thien.tien1551@gmail.com',
-        pass: 'hktfafomcastgcnl',
+        user: 'nhduc1201@gmail.com',
+        pass: 'lcdjiwpagrsybefg',
       },
     });
     console.log('test 2');
 
     const mailOptions = {
-      from: 'Vexere <thien.tien1551@gmail.com>',
+      from: 'Vexere <nhduc1201@gmail.com>',
       to: email,
       subject: 'Verify email',
-      text: '\nPlease enter your code ' + user_verification.code,
+      text: `\nPlease enter your code ${userVeri.code}`,
     };
     console.log('test 3');
 

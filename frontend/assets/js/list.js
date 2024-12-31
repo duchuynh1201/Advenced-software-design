@@ -36,7 +36,7 @@ $(document).ready(async function () {
         });
         response = await response.json();
         if (!response) return false;
-        if (typeof response.history_list === 'undefined' || response.history_list === null) {
+        if (typeof response.historyList === 'undefined' || response.historyList === null) {
           return false;
         }
         return true;
@@ -217,6 +217,7 @@ $(document).ready(async function () {
 
   $('#list-of-buses-div').on('click', '.book-bus', function () {
     const bid = $(this).attr('bid');
+    // console.log('bid: ', bid);
     window.location.href = '/fill-form/' + bid;
   });
 
@@ -292,6 +293,7 @@ function viewDetail(id, averRating) {
         Accept: 'application/json',
       },
       success: function (data) {
+        console.log('dataReview: ', data);
         if (maxCommentNum == null || maxCommentNum < data.count) maxCommentNum = data.count;
         if (data.data.length > 0) {
           data.data.forEach((item) => {
@@ -432,6 +434,7 @@ function viewDetail(id, averRating) {
   $.get(`${BACKEND_URL}/bus/${id}`, {}, function (data) {
     let duration = (new Date(data.end_time) - new Date(data.start_time)) / 1000;
     if (data) {
+      console.log('dataReview: ', data);
       Policy = data.policy
         ?.replaceAll('&amp;', '&')
         .replaceAll('&gt;', '>')
@@ -442,8 +445,8 @@ function viewDetail(id, averRating) {
         bo_name: data.bus_operators.name,
         phone_num: data.bus_operators.phone,
         rating: averRating,
-        start_point: data.bus_stations_bus_stationsTobuses_start_point.name,
-        end_point: data.bus_stations_bus_stationsTobuses_end_point.name,
+        start_point: data.bus_stations_buses_start_pointTobus_stations.name,
+        end_point: data.bus_stations_buses_end_pointTobus_stations.name,
         start_time: data.start_time,
         end_time: data.end_time,
         duration: secondsToHms(duration),

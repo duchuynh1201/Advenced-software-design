@@ -151,9 +151,9 @@ const getHistoryByUId = async (req) => {
     include: {
       buses: {
         include: {
-          bus_stations_bus_stationsTobuses_end_point: true,
-          bus_stations_bus_stationsTobuses_start_point: true,
           bus_operators: true,
+          bus_stations_buses_end_pointTobus_stations: true,
+          bus_stations_buses_start_pointTobus_stations: true,
         },
       },
     },

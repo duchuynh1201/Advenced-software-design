@@ -16,12 +16,13 @@ const puppeteer = require('puppeteer');
 
 // }
 // const pdf = require('pdf-creator-node');
+
+// const path = require('path');
 const nodemailer = require('nodemailer');
 const httpStatus = require('http-status');
 const { PrismaClient } = require('@prisma/client');
 const { ERROR_MESSAGE } = require('../constants/ticket.constant');
 const ApiError = require('../utils/ApiError');
-const path = require('path');
 
 const prisma = new PrismaClient();
 
@@ -50,8 +51,8 @@ const createTicketByNumOfSeats = async (email, userId, busId, name, phone, numOf
       id: busId,
     },
     include: {
-      bus_stations_bus_stationsTobuses_end_point: true,
-      bus_stations_bus_stationsTobuses_start_point: true,
+      bus_stations_buses_end_pointTobus_stations: true,
+      bus_stations_buses_start_pointTobus_stations: true,
       bus_operators: true,
     },
   });
@@ -123,8 +124,8 @@ const createTicketByNumOfSeats = async (email, userId, busId, name, phone, numOf
     result.seat_positions.push(createTicket.seat);
     result.ticket_ids.push(createTicket.id);
     result.bo_name = checkBusIDExist.bus_operators.name;
-    result.start_point = checkBusIDExist.bus_stations_bus_stationsTobuses_start_point.name;
-    result.end_point = checkBusIDExist.bus_stations_bus_stationsTobuses_end_point.name;
+    result.start_point = checkBusIDExist.bus_stations_buses_start_pointTobus_stations.name;
+    result.end_point = checkBusIDExist.bus_stations_buses_end_pointTobus_stations.name;
     result.start_time = checkBusIDExist.start_time;
     result.end_time = checkBusIDExist.end_time;
     result.duration = Math.abs(checkBusIDExist.end_time.getTime() - checkBusIDExist.start_time.getTime());
@@ -248,109 +249,109 @@ const createTicketByNumOfSeats = async (email, userId, busId, name, phone, numOf
   const statusTmp = result.status === 0 ? 'Booked' : result.status === 1 ? 'Paid' : 'Canceled';
   const seatPositions = result.seat_positions.join(', ');
 
-  const templateHTML = `<div id="table">
-    <table class="table table-hover table-striped">
-      <tbody>
-        <tr style="height: 80px">
-          <th class="quarter-width align-middle ps-4">Full name</th>
-          <td class="quarter-width align-middle">{{name}}</td>
-          <th class="quarter-width align-middle ps-4">Email</th>
-          <td class="quarter-width align-middle">{{email}}</td>
-        </tr>
-        <tr style="height: 80px">
-          <th class="quarter-width align-middle ps-4">Ticket id</th>
-          <td class="quarter-width align-middle">
-            <ul class="disc-list-style-type px-3">{{ticketIdsFormatted}}</ul>
-          </td>
-          <th class="quarter-width align-middle ps-4">Bus operator</th>
-          <td class="quarter-width align-middle">{{result.bo_name}}</td>
-        </tr>
-        <tr style="height: 80px">
-          <th class="quarter-width align-middle ps-4">Start point</th>
-          <td class="quarter-width align-middle">{{result.start_point}}</td>
-          <th class="quarter-width align-middle ps-4">End point</th>
-          <td class="quarter-width align-middle">{{result.end_point}}</td>
-        </tr>
-        <tr style="height: 80px">
-          <th class="quarter-width align-middle ps-4">Start time</th>
-          <td class="quarter-width align-middle">
-            {{startTime}}
-          </td>
-          <th class="quarter-width align-middle ps-4">End time</th>
-          <td class="quarter-width align-middle">
-            {{endTime}}
-          </td>
-        </tr>
-        <tr style="height: 80px">
-          <th class="quarter-width align-middle ps-4">Duration</th>
-          <td class="quarter-width align-middle">{{durationFormatted}}</td>
-          <th class="quarter-width align-middle ps-4">Policy</th>
-          <td class="quarter-width align-middle">{{result.policy}}</td>
-        </tr>
-        <tr style="height: 80px">
-          <th class="quarter-width align-middle ps-4">Number of seats</th>
-          <td class="quarter-width align-middle">{{result.num_of_seats}}</td>
-          <th class="quarter-width align-middle ps-4">Type of bus</th>
-          <td class="quarter-width align-middle">
-            {{busType}}
-          </td>
-        </tr>
-        <tr style="height: 80px">
-          <th class="quarter-width align-middle ps-4">Ticket cost</th>
-          <td class="quarter-width align-middle">{{result.ticket_cost}} VND</td>
-          <th class="quarter-width align-middle ps-4">Total cost</th>
-          <td class="quarter-width align-middle">{{result.total_cost}} VND</td>
-        </tr>
-        <tr style="height: 80px">
-          <th class="quarter-width align-middle ps-4">Seat positions</th>
-          <td class="quarter-width align-middle">{{seatPositions}}</td>
-          <th class="quarter-width align-middle ps-4">Status</th>
-          <td class="quarter-width align-middle">
-            {{statusTmp}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>`;
+  // const templateHTML = `<div id="table">
+  //   <table class="table table-hover table-striped">
+  //     <tbody>
+  //       <tr style="height: 80px">
+  //         <th class="quarter-width align-middle ps-4">Full name</th>
+  //         <td class="quarter-width align-middle">{{name}}</td>
+  //         <th class="quarter-width align-middle ps-4">Email</th>
+  //         <td class="quarter-width align-middle">{{email}}</td>
+  //       </tr>
+  //       <tr style="height: 80px">
+  //         <th class="quarter-width align-middle ps-4">Ticket id</th>
+  //         <td class="quarter-width align-middle">
+  //           <ul class="disc-list-style-type px-3">{{ticketIdsFormatted}}</ul>
+  //         </td>
+  //         <th class="quarter-width align-middle ps-4">Bus operator</th>
+  //         <td class="quarter-width align-middle">{{result.bo_name}}</td>
+  //       </tr>
+  //       <tr style="height: 80px">
+  //         <th class="quarter-width align-middle ps-4">Start point</th>
+  //         <td class="quarter-width align-middle">{{result.start_point}}</td>
+  //         <th class="quarter-width align-middle ps-4">End point</th>
+  //         <td class="quarter-width align-middle">{{result.end_point}}</td>
+  //       </tr>
+  //       <tr style="height: 80px">
+  //         <th class="quarter-width align-middle ps-4">Start time</th>
+  //         <td class="quarter-width align-middle">
+  //           {{startTime}}
+  //         </td>
+  //         <th class="quarter-width align-middle ps-4">End time</th>
+  //         <td class="quarter-width align-middle">
+  //           {{endTime}}
+  //         </td>
+  //       </tr>
+  //       <tr style="height: 80px">
+  //         <th class="quarter-width align-middle ps-4">Duration</th>
+  //         <td class="quarter-width align-middle">{{durationFormatted}}</td>
+  //         <th class="quarter-width align-middle ps-4">Policy</th>
+  //         <td class="quarter-width align-middle">{{result.policy}}</td>
+  //       </tr>
+  //       <tr style="height: 80px">
+  //         <th class="quarter-width align-middle ps-4">Number of seats</th>
+  //         <td class="quarter-width align-middle">{{result.num_of_seats}}</td>
+  //         <th class="quarter-width align-middle ps-4">Type of bus</th>
+  //         <td class="quarter-width align-middle">
+  //           {{busType}}
+  //         </td>
+  //       </tr>
+  //       <tr style="height: 80px">
+  //         <th class="quarter-width align-middle ps-4">Ticket cost</th>
+  //         <td class="quarter-width align-middle">{{result.ticket_cost}} VND</td>
+  //         <th class="quarter-width align-middle ps-4">Total cost</th>
+  //         <td class="quarter-width align-middle">{{result.total_cost}} VND</td>
+  //       </tr>
+  //       <tr style="height: 80px">
+  //         <th class="quarter-width align-middle ps-4">Seat positions</th>
+  //         <td class="quarter-width align-middle">{{seatPositions}}</td>
+  //         <th class="quarter-width align-middle ps-4">Status</th>
+  //         <td class="quarter-width align-middle">
+  //           {{statusTmp}}
+  //         </td>
+  //       </tr>
+  //     </tbody>
+  //   </table>
+  // </div>`;
 
   // console.log(template);
 
-  const options = {
-    format: 'A5',
-    orientation: 'portrait',
-    border: '10mm',
-    header: {
-      height: '45mm',
-      contents: `<div style="text-align: center;">Author: ${email}</div>`,
-    },
-    footer: {
-      height: '28mm',
-      contents: {
-        first: 'Cover page',
-        2: 'Second page', // Any page number is working. 1-based index
-        default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
-        last: 'Last Page',
-      },
-    },
-  };
-  const document = {
-    html: templateHTML,
-    data: {
-      name,
-      email,
-      result,
-      ticketIdsFormatted,
-      startTime,
-      endTime,
-      durationFormatted,
-      busType,
-      statusTmp,
-      seatPositions,
-    },
-    path: path.join(__dirname, '../output/ticket-information.pdf'),
-    // phantomPath: `${phantomPath}`,
-    type: '',
-  };
+  // const options = {
+  //   format: 'A5',
+  //   orientation: 'portrait',
+  //   border: '10mm',
+  //   header: {
+  //     height: '45mm',
+  //     contents: `<div style="text-align: center;">Author: ${email}</div>`,
+  //   },
+  //   footer: {
+  //     height: '28mm',
+  //     contents: {
+  //       first: 'Cover page',
+  //       2: 'Second page', // Any page number is working. 1-based index
+  //       default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+  //       last: 'Last Page',
+  //     },
+  //   },
+  // };
+  // const document = {
+  //   html: templateHTML,
+  //   data: {
+  //     name,
+  //     email,
+  //     result,
+  //     ticketIdsFormatted,
+  //     startTime,
+  //     endTime,
+  //     durationFormatted,
+  //     busType,
+  //     statusTmp,
+  //     seatPositions,
+  //   },
+  //   path: path.join(__dirname, '../output/ticket-information.pdf'),
+  //   // phantomPath: `${phantomPath}`,
+  //   type: '',
+  // };
 
   try {
     console.log('test 0');
@@ -452,14 +453,14 @@ const createTicketByNumOfSeats = async (email, userId, busId, name, phone, numOf
       port: 465,
       secure: true,
       auth: {
-        user: 'thien.tien1551@gmail.com',
-        pass: 'hktfafomcastgcnl',
+        user: 'nhduc1201@gmail.com',
+        pass: 'lcdjiwpagrsybefg',
       },
     });
 
 
     const mailOptions = {
-      from: 'Vexere <thien.tien1551@gmail.com>',
+      from: 'Vexere <nhduc1201@gmail.com>',
       to: email,
       subject: 'Ticket information',
       html: `<html><body>${template}</body></html>`,
