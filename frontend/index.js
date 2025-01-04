@@ -13,11 +13,13 @@ app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, './views'));
 app.use(express.static(path.join(__dirname, './assets')));
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3000/v1';
+const GG_ID = process.env.GG_ID || '669935704831-l3b2tmvde6esb62gulin3eusrj32mqca.apps.googleusercontent.com';
 
 app.get('/', (req, res) => {
   res.render('home', {
     title: 'Home',
     BACKEND_URL,
+    GG_ID,
   });
 });
 
@@ -38,6 +40,13 @@ app.get('/fill-form/:busId', async (req, res) => {
 app.get('/history', (req, res) => {
   res.render('history', {
     title: 'History',
+    BACKEND_URL,
+  });
+});
+
+app.get('/loginWithGoogle', (req, res) => { 
+  res.render('loginWithGoogle', {
+    title: 'Login',
     BACKEND_URL,
   });
 });

@@ -24,22 +24,6 @@ const createUser = async (userBody) => {
   // eslint-disable-next-line no-param-reassign
   userBody.password = Buffer.from(userBody.password);
 
-  // const checkEmail = await prisma.users.findUnique({
-  //   where: {
-  //     email: userBody.email,
-  //   },
-  // });
-
-  // if (checkEmail && checkEmail.verification === true) {
-  //   throw new ApiError(httpStatus.BAD_REQUEST, 'Username already taken');
-  // } else if (checkEmail && checkEmail.verification === false) {
-  //   await prisma.users.delete({
-  //     where: {
-  //       email: userBody.email,
-  //     },
-  //   });
-  // }
-
   // eslint-disable-next-line no-param-reassign
   delete userBody.repassword;
 
@@ -47,6 +31,22 @@ const createUser = async (userBody) => {
 
   const user = prisma.users.create({
     data: userBody,
+  });
+
+  return user;
+};
+
+/**
+ * Create a user by emailGoogle and Sub
+ * @param {Object} userBody
+ * @returns {Promise<User>}
+ */
+const createUserByEmailAndSub = async (userBody) => {
+  const user = prisma.users.create({
+    data: {
+      email: userBody.email,
+      ggid: userBody.sub,
+    },
   });
 
   return user;
@@ -80,9 +80,24 @@ const getUserById = async (id) => {
  * @returns {Promise<User>}
  */
 const getUserByEmail = async (email) => {
-  return prisma.users.findUnique({
+  return prisma.users.findFirst({
     where: {
       email,
+      ggid: null,
+    },
+  });
+};
+
+/**
+ * Get user by email and sub
+ * @param {string} email
+ * @param {string} sub
+ */
+const getUserByEmailAndSub = async (email, sub) => {
+  return prisma.users.findFirst({
+    where: {
+      email,
+      ggid: sub,
     },
   });
 };
@@ -164,9 +179,11 @@ const getHistoryByUId = async (req) => {
 module.exports = {
   getHistoryByUId,
   createUser,
+  createUserByEmailAndSub,
   queryUsers,
   getUserById,
   getUserByEmail,
+  getUserByEmailAndSub,
   updateUserById,
   countMyQuestions,
   getMyQuestionsPagination,

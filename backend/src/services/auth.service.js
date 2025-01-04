@@ -2,6 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 
 const nodemailer = require('nodemailer');
 const httpStatus = require('http-status');
+
 const bcrypt = require('bcrypt');
 const tokenService = require('./token.service');
 const userService = require('./user.service');
@@ -28,6 +29,26 @@ const loginUserWithEmailAndPassword = async (email, password) => {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
   }
 
+  return user;
+};
+
+/**
+ * Login with Google
+ */
+const loginWithGoogle = async (userBody) => {
+  const user = await userService.getUserByEmailAndSub(userBody.email, userBody.sub);
+  console.log('userInService', user);
+
+  if (!user) {
+    const userGG = await userService.createUserByEmailAndSub(userBody);
+    console.log('userInService2', userGG);
+
+    if (!userGG) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+    }
+
+    return userGG;
+  }
   return user;
 };
 
@@ -178,6 +199,7 @@ const sendEmail = async (req) => {
 };
 module.exports = {
   loginUserWithEmailAndPassword,
+  loginWithGoogle,
   logout,
   refreshAuth,
   resetPassword,

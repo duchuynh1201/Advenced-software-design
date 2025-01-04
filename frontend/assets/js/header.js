@@ -9,7 +9,7 @@ $(document).ready(function () {
     aria-expanded="false"
     style="margin-left: 5px"
   >
-    <i class="fa-solid fa-circle-user fs-1 text-black-50"></i></span>
+    <i class="fa-solid fa-circle-user fs-1 text-black-50"></i>${userInfo.user.email}</span>
   <ul class="dropdown-menu">
     <li><a class="dropdown-item" href="/history" id="goToHistory">History</a></li>
     <li>

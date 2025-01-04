@@ -13,10 +13,11 @@ model users {
   boid              String?            @db.Uuid
   email             String             @unique(map: "users_un") @db.VarChar(255)
   role              Int?               @default(2) @db.SmallInt
-  password          Bytes
+  password          Bytes?
   create_time       DateTime?          @default(now()) @db.Timestamptz(6)
   update_time       DateTime?          @default(now()) @db.Timestamptz(6)
   verification      Boolean?
+  ggid              String?
   bus_tickets       bus_tickets[]
   reviews           reviews[]
   user_verification user_verification?

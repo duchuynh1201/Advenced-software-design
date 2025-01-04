@@ -11,7 +11,7 @@ $(document).ready(function () {
     aria-expanded="false"
     style="margin-left: 5px"
   >
-    <i class="fa-solid fa-circle-user fs-1 text-black-50"></i></span>
+    <i class="fa-solid fa-circle-user fs-1 text-black-50"></i>${userInfo.user.email}</span>
   <ul class="dropdown-menu">
     <li><a class="dropdown-item" href="#" id="goToHistory">History</a></li>
     <li>
@@ -40,7 +40,6 @@ $(document).ready(function () {
     });
 
     response = await response.json();
-    console.log('response ', response);
     if (!response) console.log('fetch khong duoc');
     else if (response.message) alert(response.message);
     else {
@@ -51,14 +50,15 @@ $(document).ready(function () {
       }
       alert('You have successfully logged in!');
       localStorage.setItem('userInfo', JSON.stringify(response));
-      $('#right-side-header').html(`      <span
+
+      $('#right-side-header').html(`<span
       class="dropdown-toggle"
       type="button"
       data-bs-toggle="dropdown"
       aria-expanded="false"
       style="margin-left: 5px"
     >
-      <i class="fa-solid fa-circle-user fs-1 text-black-50"></i></span>
+      <i class="fa-solid fa-circle-user fs-1 text-black-50"></i>${response.user.email}</span>
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="#" id="goToHistory">History</a></li>
       <li>
@@ -77,6 +77,13 @@ $(document).ready(function () {
         $(location).attr('href', '/history');
       });
     }
+  });
+
+  /**
+   * Login with Google
+   */
+  $('#btnLoginGoogle').click(async function () {
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&response_type=token&redirect_uri=http://localhost:4000/loginWithGoogle&client_id=${GG_ID}`;
   });
 
   /**
@@ -155,7 +162,7 @@ $(document).ready(function () {
               aria-expanded="false"
               style="margin-left: 5px"
             >
-              <i class="fa-solid fa-circle-user fs-1 text-black-50"></i></span>
+              <i class="fa-solid fa-circle-user fs-1 text-black-50"></i>${userInfo.user.email}</span>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#" id="goToHistory">History</a></li>
               <li>
@@ -265,7 +272,7 @@ $(document).ready(function () {
             aria-expanded="false"
             style="margin-left: 5px"
           >
-            <i class="fa-solid fa-circle-user fs-1 text-black-50"></i></span>
+            <i class="fa-solid fa-circle-user fs-1 text-black-50"></i>${userInfo.user.email}</span>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#" id="goToHistory">History</a></li>
             <li>

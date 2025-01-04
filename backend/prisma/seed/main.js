@@ -145,6 +145,15 @@ const createReview = () => {
 };
 
 async function main() {
+  await prisma.$executeRaw`
+    ALTER TABLE users
+    ADD CONSTRAINT check_password_or_ggid
+    CHECK (
+      (ggid IS NOT NULL AND password IS NULL) OR
+      (ggid IS NULL AND password IS NOT NULL)
+    );
+  `;
+
   Array.from({ length: 15 }).forEach(() => {
     BUS_OPERATORS.push(createBusOperator());
   });
