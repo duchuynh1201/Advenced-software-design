@@ -27,10 +27,15 @@ const createBusStation = () => {
   };
 };
 
+const BUS_OPERATORS = [];
+const BUS_STATIONS = [];
+const BUSES = [];
+const BUS_TICKETS = [];
+const REVIEWS = [];
 const USERS = [
   {
     id: 'c118f693-8722-4461-a79d-d76991b96a9e',
-    email: 'nguyenphucbao098@gmail.com',
+    email: 'nhduc1201@gmail.com',
     role: 0,
     password: Buffer.from('$2a$10$uR5S.P86tXoBfCHl0a03bePKyN/1yE/1oCW5oRNs/IYfbDeL.WY9O'),
     create_time: '2022-03-22T12:26:44.480Z',
@@ -83,11 +88,6 @@ const USERS = [
     verification: true,
   },
 ];
-const BUS_OPERATORS = [];
-const BUS_STATIONS = [];
-const BUSES = [];
-const BUS_TICKETS = [];
-const REVIEWS = [];
 
 // select count(*) as sl, DATE(start_time), start_point, end_point
 // from buses
@@ -145,15 +145,24 @@ const createReview = () => {
 };
 
 async function main() {
-  await prisma.$executeRaw`
-    ALTER TABLE users
-    ADD CONSTRAINT check_password_or_ggid
-    CHECK (
-      (ggid IS NOT NULL AND password IS NULL) OR
-      (ggid IS NULL AND password IS NOT NULL)
-    );
+  const constraintExists = await prisma.$queryRaw`
+    SELECT 1
+    FROM information_schema.table_constraints
+    WHERE constraint_name = 'check_password_or_ggid'
+      AND table_name = 'users';
   `;
 
+  if (constraintExists.length === 0) {
+    // Add the constraint if it does not exist
+    await prisma.$executeRaw`
+      ALTER TABLE users
+      ADD CONSTRAINT check_password_or_ggid
+      CHECK (
+        (ggid IS NOT NULL AND password IS NULL) OR
+        (ggid IS NULL AND password IS NOT NULL)
+      );
+    `;
+  }
   Array.from({ length: 15 }).forEach(() => {
     BUS_OPERATORS.push(createBusOperator());
   });
@@ -174,11 +183,17 @@ async function main() {
     REVIEWS.push(createReview());
   });
 
-  console.log('Bus: ', BUSES);
+  let count = 0;
+  for (let i = 0; i < USERS.length; i += 1) {
+    if (USERS[i].role === 1) {
+      USERS[i].boid = BUS_OPERATORS[count].id;
+      count += 1;
+    }
+  }
 
   const database = {
-    users: USERS,
     bus_operators: BUS_OPERATORS,
+    users: USERS,
     bus_stations: BUS_STATIONS,
     buses: BUSES,
     reviews: REVIEWS,

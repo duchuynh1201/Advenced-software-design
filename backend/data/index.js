@@ -120,16 +120,16 @@ const ticketDateList = [
 ];
 
 const busDateList = [
-  new Date('2025-01-01T09:38:41.061Z'), // tuong lai
-  new Date('2025-01-02T09:38:41.061Z'), // tuong lai
-  new Date('2025-01-03T09:38:41.061Z'), // tuong lai
-  new Date('2025-01-04T09:38:41.061Z'), // tuong lai
-  new Date('2025-01-05T09:38:41.061Z'), // tuong lai
-  new Date('2025-01-06T09:38:41.061Z'), // tuong lai
-  new Date('2025-01-07T09:38:41.061Z'), // tuong lai
-  new Date('2025-01-08T09:38:41.061Z'), // tuong lai
-  new Date('2025-01-09T09:38:41.061Z'), // tuong lai
   new Date('2025-01-10T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-12T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-13T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-14T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-15T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-16T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-17T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-18T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-19T09:38:41.061Z'), // tuong lai
+  new Date('2025-01-20T09:38:41.061Z'), // tuong lai
 ];
 
 // module export

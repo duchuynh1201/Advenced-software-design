@@ -9,7 +9,7 @@ datasource db {
 }
 
 model users {
-  id                String             @id(map: "user_pk") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id                String             @id(map: "user_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   boid              String?            @db.Uuid
   email             String             @unique(map: "users_un") @db.VarChar(255)
   role              Int?               @default(2) @db.SmallInt
@@ -25,7 +25,7 @@ model users {
 }
 
 model bus_operators {
-  id        String    @id(map: "bus_operator_pk") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id        String    @id(map: "bus_operator_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   image_url String?
   phone     String?
   name      String
@@ -37,7 +37,7 @@ model bus_operators {
 }
 
 model bus_stations {
-  id                                    String  @id(map: "bus_station_pk") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id                                    String  @id(map: "bus_station_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name                                  String
   location                              String
   buses_buses_start_pointTobus_stations buses[] @relation("buses_start_pointTobus_stations")
@@ -47,7 +47,7 @@ model bus_stations {
 }
 
 model bus_tickets {
-  id      String @id(map: "bus_tickets_pk") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id      String @id(map: "bus_tickets_pk") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name    String
   phone   String
   seat    String
@@ -59,7 +59,7 @@ model bus_tickets {
 }
 
 model buses {
-  id                                           String        @id(map: "buses_pk_1") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id                                           String        @id(map: "buses_pk_1") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   bo_id                                        String        @db.Uuid
   start_point                                  String        @db.Uuid
   end_point                                    String        @db.Uuid
@@ -79,7 +79,7 @@ model buses {
 }
 
 model reviews {
-  id            String        @id(map: "reviews_pk_1") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id            String        @id(map: "reviews_pk_1") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   comment       String
   rate          Int           @db.SmallInt
   bo_id         String        @db.Uuid
@@ -90,6 +90,6 @@ model reviews {
 
 model user_verification {
   uid   String  @id(map: "user_verification_pk") @db.Uuid
-  code  String  @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  code  String  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   users users   @relation(fields: [uid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_verification_users_fk")
 }

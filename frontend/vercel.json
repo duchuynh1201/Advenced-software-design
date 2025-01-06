@@ -1,6 +1,8 @@
 {
   "version": 2,
-  "name": "website-hcmus",
+  "name": "my-frontend",
   "builds": [{ "src": "index.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/index.js" }]
+  "routes": [{ "src": "/(.*)", "dest": "/index.js" }],
+  "buildCommand": "yarn build",
+  "installCommand": "yarn install"
 }

@@ -83,7 +83,7 @@ $(document).ready(function () {
    * Login with Google
    */
   $('#btnLoginGoogle').click(async function () {
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&response_type=token&redirect_uri=http://localhost:4000/loginWithGoogle&client_id=${GG_ID}`;
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&response_type=token&redirect_uri=http://localhost:4000/loginWithGoogle&client_id=${GG_CLIENT_ID}`;
   });
 
   /**
