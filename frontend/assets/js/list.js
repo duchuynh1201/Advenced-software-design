@@ -69,6 +69,7 @@ $(document).ready(async function () {
   function numberWithThoundsand(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   }
+  
   async function loadMore(reset = false) {
     const checkAuthen = await isAuthenticated();
     console.log(checkAuthen);

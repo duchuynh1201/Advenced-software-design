@@ -54,7 +54,7 @@ $(document).ready(async function () {
     let date = $('#datepicker').datepicker('getDate');
 
     date = date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
-    
+    console.log('DATE: ', deparature);
     let url = `/list?startPoint=${deparature}&endPoint=${destination}&startTime=${date}`;
 
     $.ajax(`${BACKEND_URL}/bus/search`, {
