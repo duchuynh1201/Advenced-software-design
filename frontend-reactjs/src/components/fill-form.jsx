@@ -3,10 +3,10 @@ import { useState } from "react";
 import printJS from "print-js";
 
 const FillForm = () => {
-    // const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-    const [isPayment, setIsPayment] = useState(false);
-    const [isDisabled, setIsDisabled] = useState(true);
+  const [isPayment, setIsPayment] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const handleCancel = () => {
     window.location.href = window.localStorage.getItem("url");
@@ -67,8 +67,8 @@ const FillForm = () => {
         );
       } else {
         console.log(JSON.stringify(data));
-        document.querySelector("#title div h3").textContent = "Booking details";
-        const msToTime = ms => {
+        document.querySelector("#title p").textContent = "Booking details";
+        const msToTime = (ms) => {
           let seconds = (ms / 1000).toFixed(1);
           let minutes = (ms / (1000 * 60)).toFixed(1);
           let hours = (ms / (1000 * 60 * 60)).toFixed(1);
@@ -78,9 +78,9 @@ const FillForm = () => {
           else if (hours < 24) return hours + " Hours";
           else return days + " Days";
         };
-        const ticketIds = data.ticket_ids.map(tid => `<li>${tid}</li>`);
+        const ticketIds = data.ticket_ids.map((tid) => `<li>${tid}</li>`);
         console.log("TICKETIDS", data);
-        const template = `<div>
+        const template = `<div class='showTable'>
             <div id="table">
                 <table class='table table-hover table-striped'>
                 <tbody>
@@ -189,11 +189,11 @@ const FillForm = () => {
                 </tbody>
                 </table>
             </div>
-            <div class='mt-5 d-flex justify-content-center align-items-center'>
-                <button type='button' class='home-btn btn btn-primary py-3 px-4' style='margin-right: 300px;width: 110px'>
+            <div class='btnShow'>
+                <button type='button' class='btnShowForm'>
                 Home
                 </button>
-                <button id="pay-btn" type='button' class='btn btn-primary py-3 px-4' style='width: 110px'>
+                <button id="pay-btn" type='button' class='btnShowForm'>
                 Pay
                 </button>
             </div>
@@ -242,147 +242,127 @@ const FillForm = () => {
   };
 
   return (
-    <>
+    <div className="bodyBus">
       <div
         id="title"
         className="mt-5 mb-5 card bg-light"
-        style={{ height: "150px", display: isDisabled ? "block" : "none" }}
+        style={{
+          height: "150px",
+          display: isDisabled ? "flex" : "none",
+          backgroundColor: "#F8F9FA",
+          textAlign: "center",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        <div className="card-body d-flex justify-content-center align-items-center">
-          <h3>Fill in booking form</h3>
-        </div>
+        <p style={{ fontSize: "26px", fontWeight: "bold" }}>
+          Fill in booking form
+        </p>
       </div>
 
-      <div id="form-container" style={{ display: isDisabled ? "block" : "none" }}>
-        <form id="form">
-          <div className="form-group row mb-4">
-            <label htmlFor="inputFullName" className="col-sm-2 col-form-label">
+      <div
+        id="form-container"
+        style={{ display: isDisabled ? "flex" : "none", width: "100%" }}
+      >
+        <form id="form" className="bodyForm">
+          <div className="form-group rowfill">
+            <label htmlFor="inputFullName" className="lableForm">
               Full Name
             </label>
-            <div className="col-sm-10 d-flex">
-              <input
-                required
-                type="text"
-                className="form-control"
-                id="inputFullName"
-                name="inputFullName"
-                placeholder="Full Name"
-                autoFocus
-              />
-            </div>
+            <input
+              required
+              type="text"
+              className="form-control"
+              id="inputFullName"
+              name="inputFullName"
+              placeholder="Full Name"
+              autoFocus
+            />
           </div>
-          <hr className="my-4" />
-          <div className="form-group row mb-4">
-            <label htmlFor="disabledEmail" className="col-sm-2 col-form-label">
+          <div className="form-group rowfill">
+            <label htmlFor="disabledEmail" className="lableForm">
               Email
             </label>
-            <div className="col-sm-10">
-              <input
-                readOnly
-                type="text"
-                className="form-control bg-secondary text-light"
-                id="disabledEmail"
-                name="disabledEmail"
-                value="example@gmail.com"
-              />
-            </div>
+            <input
+              readOnly
+              type="text"
+              className="form-control bg-secondary text-light"
+              id="disabledEmail"
+              name="disabledEmail"
+              value="example@gmail.com"
+            />
           </div>
-          <hr className="my-4" />
-          <div className="form-group row mb-4">
-            <label htmlFor="inputPhone" className="col-sm-2 col-form-label">
+          <div className="form-group rowfill">
+            <label htmlFor="inputPhone" className="lableForm">
               Phone
             </label>
-            <div className="col-sm-10">
-              <input
-                required
-                type="text"
-                className="form-control"
-                id="inputPhone"
-                placeholder="Phone Number"
-                name="inputPhone"
-                pattern="\d+"
-              />
-            </div>
+            <input
+              required
+              type="text"
+              className="form-control"
+              id="inputPhone"
+              placeholder="Phone Number"
+              name="inputPhone"
+              pattern="\d+"
+            />
           </div>
-          <hr className="my-4" />
-          <div className="form-group row">
-            <label
-              htmlFor="disabledStartTime"
-              className="col-sm-2 col-form-label"
-            >
+          <div className="form-group rowfill">
+            <label htmlFor="disabledStartTime" className="lableForm">
               Start Time
             </label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                readOnly
-                className="form-control bg-secondary text-light"
-                id="disabledStartTime"
-                name="disabledStartTime"
-                value="February 11th, 2022 15:00"
-              />
-            </div>
+            <input
+              type="text"
+              readOnly
+              className="form-control bg-secondary text-light"
+              id="disabledStartTime"
+              name="disabledStartTime"
+              value="February 11th, 2022 15:00"
+            />
           </div>
-          <hr className="my-4" />
-          <div className="form-group row">
-            <label
-              htmlFor="disabledEndTime"
-              className="col-sm-2 col-form-label"
-            >
+          <div className="form-group rowfill">
+            <label htmlFor="disabledEndTime" className="lableForm">
               End Time
             </label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                readOnly
-                className="form-control bg-secondary text-light"
-                id="disabledEndTime"
-                name="disabledEndTime"
-                value="February 11th, 2022 20:00"
-              />
-            </div>
+            <input
+              type="text"
+              readOnly
+              className="form-control bg-secondary text-light"
+              id="disabledEndTime"
+              name="disabledEndTime"
+              value="February 11th, 2022 20:00"
+            />
           </div>
-          <hr className="my-4" />
-          <div className="form-group row">
-            <label htmlFor="destination" className="col-sm-2 col-form-label">
+          <div className="form-group rowfill">
+            <label htmlFor="destination" className="lableForm">
               Destination
             </label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                readOnly
-                className="form-control bg-secondary text-light"
-                id="destination"
-                name="destination"
-                value="Hà Nội"
-              />
-            </div>
+            <input
+              type="text"
+              readOnly
+              className="form-control bg-secondary text-light"
+              id="destination"
+              name="destination"
+              value="Hà Nội"
+            />
           </div>
-          <hr className="my-4" />
-          <div className="form-group row mb-4">
-            <label
-              htmlFor="inputNumberOfSeat"
-              className="col-sm-2 col-form-label"
-            >
+          <div className="form-group rowfill">
+            <label htmlFor="inputNumberOfSeat" className="lableForm">
               Number Of Seats
             </label>
-            <div className="col-sm-10">
-              <input
-                required
-                type="text"
-                className="form-control"
-                id="inputNumberOfSeat"
-                placeholder="Number of seats"
-                pattern="^\d+$"
-              />
-            </div>
+            <input
+              required
+              type="text"
+              className="form-control"
+              id="inputNumberOfSeat"
+              placeholder="Number of seats"
+              pattern="^\d+$"
+            />
           </div>
-          <hr className="my-4" />
-          <div className="mt-5 d-flex justify-content-center align-items-center">
+          <div className="listBTN">
             <button
               id="cancel-btn"
               type="button"
-              className="btn btn-primary py-3 px-4"
+              className="btnFillFom "
               style={{ marginRight: "300px", width: "110px" }}
               onClick={() => handleCancel()}
             >
@@ -391,7 +371,7 @@ const FillForm = () => {
             <button
               id="submit-btn"
               type="button"
-              className="btn btn-primary py-3 px-4"
+              className="btnFillFom"
               style={{ width: "110px" }}
               onClick={() => handleSubmitForm()}
             >
@@ -462,7 +442,7 @@ const FillForm = () => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
