@@ -322,7 +322,7 @@ tr th {
 
 /* CSS cho nút đóng */
 .btn-close {
-  width: 250px;
+  width: 100px;
   background-color: #dc3545;
   border: none;
   border-radius: 5px;

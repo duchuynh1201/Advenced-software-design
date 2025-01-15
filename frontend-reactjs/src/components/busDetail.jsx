@@ -171,6 +171,9 @@ const BusDetail = () => {
         });
     }
   };
+  const handleClose = () => {
+    window.location.href = localStorage.getItem("url");
+  };
 
   const [activeTab, setActiveTab] = useState("operator");
   const handleTabClick = (tab) => {
@@ -180,220 +183,242 @@ const BusDetail = () => {
 
   return (
     <>
-      {/* <div style={{ width: "70%", height: "300px", padding: "0" }}> */}
-      <div className="card" style={{ width: "70%" }}>
-        <div className="cardDetail-header">
-          <button
-            className={`nav-link ${activeTab === "operator" ? "active" : ""}`}
-            id="pills-bus-operator-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-bus-operator"
-            type="button"
-            role="tab"
-            aria-controls="pills-bus-operator"
-            aria-selected={activeTab === "operator"}
-            onClick={() => handleTabClick("operator")}
-          >
-            Bus operator
-          </button>
+      <div
+        className="flex justify-center"
+        style={{ width: "100%", height: "300px", padding: "0" }}
+      >
+        <div className="card relative" style={{ width: "55%", top: "-161px" }}>
+          <div className="cardDetail-header">
+            <button
+              className={`nav-link ${activeTab === "operator" ? "active" : ""}`}
+              id="pills-bus-operator-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-bus-operator"
+              type="button"
+              role="tab"
+              aria-controls="pills-bus-operator"
+              aria-selected={activeTab === "operator"}
+              onClick={() => handleTabClick("operator")}
+            >
+              Bus
+              <br />
+              operator
+            </button>
 
-          <button
-            className={`nav-link ${activeTab === "information" ? "active" : ""}`}
-            id="pills-bus-information-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-bus-information"
-            type="button"
-            role="tab"
-            aria-controls="pills-bus-information"
-            aria-selected={activeTab === "information"}
-            onClick={() => handleTabClick("information")}
-          >
-            Bus information
-          </button>
-          <button type="button" className="btn-close" aria-label="Close">x</button>
-        </div>
-        <div className="cardInforBody">
-          <div
-            className="tab-content"
-            id="pills-tabContent"
-            style={{ display: isOperator ? "flex" : "none" }}
-          >
-            <div className="inforBus">
-              <h3 className="nameBus">
-                {" "}
-                Nhà xe {dataOperator.bus_operators?.name}
-              </h3>
-              <div className="inforImage">
-                <img
-                  className=""
-                  src={dataOperator.bus_operators?.image_url}
-                  alt="Nhà xe"
-                />
-              </div>
-              <div className="contactBus">
-                <span
-                  className="infoPhone"
-                  style={{ fontSize: "23px", fontWeight: "300" }}
-                >
-                  Phone number:
+            <button
+              className={`nav-link ${
+                activeTab === "information" ? "active" : ""
+              }`}
+              id="pills-bus-information-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-bus-information"
+              type="button"
+              role="tab"
+              aria-controls="pills-bus-information"
+              aria-selected={activeTab === "information"}
+              onClick={() => handleTabClick("information")}
+            >
+              Bus
+              <br />
+              information
+            </button>
+            <button
+              type="button"
+              className="btn-close"
+              aria-label="Close"
+              onClick={() => handleClose()}
+            >Close
+            </button>
+          </div>
+          <div className="cardInforBody">
+            <div
+              className="tab-content"
+              id="pills-tabContent"
+              style={{ display: isOperator ? "flex" : "none" }}
+            >
+              <div className="inforBus">
+                <h3 className="nameBus">
+                  {" "}
+                  Nhà xe {dataOperator.bus_operators?.name}
+                </h3>
+                <div className="inforImage">
+                  <img
+                    className=""
+                    src={dataOperator.bus_operators?.image_url}
+                    alt="Nhà xe"
+                  />
+                </div>
+                <div className="contactBus">
                   <span
-                    className="phoneBus"
-                    style={{
-                      fontSize: "23px",
-                      fontWeight: "bold",
-                      padding: "0px 10px",
-                    }}
+                    className="infoPhone"
+                    style={{ fontSize: "23px", fontWeight: "300" }}
                   >
-                    {dataOperator.bus_operators?.phone}
+                    Phone number:
+                    <span
+                      className="phoneBus"
+                      style={{
+                        fontSize: "23px",
+                        fontWeight: "bold",
+                        padding: "0px 10px",
+                      }}
+                    >
+                      {dataOperator.bus_operators?.phone}
+                    </span>
                   </span>
-                </span>
-                <span className="inforRating">
-                  {averRating} <FontAwesomeIcon icon={faStar} />
-                </span>
+                  <span className="inforRating">
+                    {averRating} <FontAwesomeIcon icon={faStar} />
+                  </span>
+                </div>
               </div>
+
+              <div id="user_comment"></div>
+
+              <nav
+                className="page-navigation"
+                aria-label="Page navigation example"
+              >
+                <button
+                  type="button"
+                  className="page-link"
+                  id="Previous"
+                  onClick={() => handlePrevious(dataOperator.bus_operators?.id)}
+                >
+                  Previous
+                </button>
+                <button
+                  type="button"
+                  className="page-link"
+                  id="Next"
+                  onClick={() => handleNext(dataOperator.bus_operators?.id)}
+                >
+                  Next
+                </button>
+              </nav>
+              <div className="space"></div>
+              {/* Comment */}
+              <form className="formComment" id="user_review">
+                <textarea
+                  className="form-control formCmt"
+                  placeholder="Your Comments"
+                  id="floatingTextarea2"
+                  style={{ height: "150px", resize: "none", outline: "none" }}
+                  required
+                ></textarea>
+                <div className="selectedCmt">
+                  <span className="float-start flex items-center" id="rating">
+                    {[...Array(5)].map((_, index) => (
+                      <a
+                        key={index + 1}
+                        type="button"
+                        className="btn fillStart text-warning star"
+                        id={index + 1}
+                        onClick={() => setUserRating(index + 1)}
+                      >
+                        {index < userRating ? <FaStar /> : <BiStar />}
+                      </a>
+                    ))}
+                  </span>
+                  <span className="float-end flex items-center">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleSubmitComment(dataOperator.bus_operators?.id)
+                      }
+                      className="btnFillFom"
+                    >
+                      Submit
+                    </button>
+                  </span>
+                </div>
+              </form>
             </div>
 
-            <div id="user_comment" ></div>
-
-            <nav className="page-navigation" aria-label="Page navigation example">
-              <button
-                type="button"
-                className="page-link"
-                id="Previous"
-                onClick={() => handlePrevious(dataOperator.bus_operators?.id)}
-              >
-                Previous
-              </button>
-              <button
-                type="button"
-                className="page-link"
-                id="Next"
-                onClick={() => handleNext(dataOperator.bus_operators?.id)}
-              >
-                Next
-              </button>
-            </nav>
-            <div className="space"></div>
-            {/* Comment */}
-            <form className="formComment" id="user_review">
-              <textarea
-                className="form-control formCmt"
-                placeholder="Your Comments"
-                id="floatingTextarea2"
-                style={{ height: "150px", resize: "none", outline: "none" }}
-                required
-              ></textarea>
-              <div className="selectedCmt">
-                <span className="float-start flex items-center" id="rating">
-                  {[...Array(5)].map((_, index) => (
-                    <a
-                      key={index + 1}
-                      type="button"
-                      className="btn fillStart text-warning star"
-                      id={index + 1}
-                      onClick={() => setUserRating(index + 1)}
-                    >
-                      {index < userRating ? <FaStar /> : <BiStar />}
-                    </a>
-                  ))}
-                </span>
-                <span className="float-end flex items-center">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      handleSubmitComment(dataOperator.bus_operators?.id)
-                    }
-                    className="btnFillFom"
-                  >
-                    Submit
-                  </button>
-                </span>
-              </div>
-            </form>
-          </div>
-
-          {/* DETAiL BUS */}
-          <div
-            className="tab-pane fade"
-            id="pills-bus-information"
-            role="tabpanel"
-            aria-labelledby="pills-bus-information-tab"
-            style={{ display: isOperator ? "none" : "flex" }}
-          >
-            <div className="toBTN2">
-              <table className="table table-borderless">
-                <tr>
-                  <td className="fst-italic" style={{ width: "30%" }}>
-                    Bus operator
-                  </td>
-                  <td className="text-primary">
-                    {dataOperator.bus_operators?.name}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="fst-italic">Start point</td>
-                  <td className="text-primary">
-                    {
-                      dataOperator.bus_stations_buses_start_pointTobus_stations
-                        ?.name
-                    }
-                  </td>
-                </tr>
-                <tr>
-                  <td className="fst-italic">End point</td>
-                  <td className="text-primary">
-                    {
-                      dataOperator.bus_stations_buses_end_pointTobus_stations
-                        ?.name
-                    }
-                  </td>
-                </tr>
-                <tr>
-                  <td className="fst-italic">Start time</td>
-                  <td className="text-primary">{dataOperator.start_time}</td>
-                </tr>
-                <tr>
-                  <td className="fst-italic">End time</td>
-                  <td className="text-primary">{dataOperator.end_time}</td>
-                </tr>
-                <tr>
-                  <td className="fst-italic">Duration</td>
-                  <td className="text-primary">
-                    {secondsToHms(
-                      (new Date(dataOperator.end_time) -
-                        new Date(dataOperator.start_time)) /
-                        1000
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="fst-italic">Policy</td>
-                  <td className="text-primary" id="policy">
-                    {dataOperator.policy}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="fst-italic">Number of seats</td>
-                  <td className="text-primary">{dataOperator.num_of_seats}</td>
-                </tr>
-                <tr>
-                  <td className="fst-italic">Type of bus</td>
-                  <td className="text-primary">{typeName[dataOperator.type]}</td>
-                </tr>
-                <tr>
-                  <td className="fst-italic">Cost</td>
-                  <td className="text-primary">{dataOperator.price} vnđ</td>
-                </tr>
-              </table>
-              <div className="space s1"></div>
-              <div className="showImage">
-                <img className="" src={dataOperator.image_url} alt="Xe" />
+            {/* DETAiL BUS */}
+            <div
+              className="tab-pane fade"
+              id="pills-bus-information"
+              role="tabpanel"
+              aria-labelledby="pills-bus-information-tab"
+              style={{ display: isOperator ? "none" : "flex" }}
+            >
+              <div className="toBTN2">
+                <table className="table table-borderless">
+                  <tr>
+                    <td className="fst-italic" style={{ width: "30%" }}>
+                      Bus operator
+                    </td>
+                    <td className="text-primary">
+                      {dataOperator.bus_operators?.name}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="fst-italic">Start point</td>
+                    <td className="text-primary">
+                      {
+                        dataOperator
+                          .bus_stations_buses_start_pointTobus_stations?.name
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="fst-italic">End point</td>
+                    <td className="text-primary">
+                      {
+                        dataOperator.bus_stations_buses_end_pointTobus_stations
+                          ?.name
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="fst-italic">Start time</td>
+                    <td className="text-primary">{dataOperator.start_time}</td>
+                  </tr>
+                  <tr>
+                    <td className="fst-italic">End time</td>
+                    <td className="text-primary">{dataOperator.end_time}</td>
+                  </tr>
+                  <tr>
+                    <td className="fst-italic">Duration</td>
+                    <td className="text-primary">
+                      {secondsToHms(
+                        (new Date(dataOperator.end_time) -
+                          new Date(dataOperator.start_time)) /
+                          1000
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="fst-italic">Policy</td>
+                    <td className="text-primary" id="policy">
+                      {dataOperator.policy}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="fst-italic">Number of seats</td>
+                    <td className="text-primary">
+                      {dataOperator.num_of_seats}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="fst-italic">Type of bus</td>
+                    <td className="text-primary">
+                      {typeName[dataOperator.type]}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="fst-italic">Cost</td>
+                    <td className="text-primary">{dataOperator.price} vnđ</td>
+                  </tr>
+                </table>
+                <div className="space s1"></div>
+                <div className="showImage">
+                  <img className="" src={dataOperator.image_url} alt="Xe" />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* </div> */}
     </>
   );
 };
