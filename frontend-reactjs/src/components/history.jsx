@@ -49,8 +49,8 @@ const History = () => {
     return (
       <>
         <div className="history-list">
-          <div className="h1 text-center">Booking history</div>
-          <div id="hList" className="">
+          <div className="titleHis">Booking history</div>
+          <div id="hList" className="bodyHis">
             <div className="table-responsive">
               <table id="history-list" className="table table-striped mt-5">
                 <thead>
@@ -66,32 +66,44 @@ const History = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentHistoryData
-                    .map(
-                      (item, index) => 
+                  {currentHistoryData.map((item, index) => (
                     <tr key={index}>
-                        <td scope='row' width ='2%'>{index + 1}</td>
-                        <td>{item.id}</td>
-                        <td>{item.buses.bus_operators.name}</td>
-                        <td>{
+                      <td scope="row" width="2%">
+                        {index + 1}
+                      </td>
+                      <td>{item.id}</td>
+                      <td>{item.buses.bus_operators.name}</td>
+                      <td>
+                        {
                           item.buses
                             .bus_stations_buses_start_pointTobus_stations.name
-                        }</td>
-                        <td>{
+                        }
+                      </td>
+                      <td>
+                        {
                           item.buses.bus_stations_buses_end_pointTobus_stations
                             .name
-                        }</td>
-                        <td>{item.buses.start_time}</td>
-                        <td>{item.buses.end_time}</td>
-                        <td><span className="text-primary" onClick={() => handleViewDetail(item.id)} role="button">View</span></td>
+                        }
+                      </td>
+                      <td>{item.buses.start_time}</td>
+                      <td>{item.buses.end_time}</td>
+                      <td>
+                        <span
+                          className="text-primary"
+                          onClick={() => handleViewDetail(item.id)}
+                          role="button"
+                        >
+                          View
+                        </span>
+                      </td>
                     </tr>
-                    )}
+                  ))}
                 </tbody>
               </table>
             </div>
             <div className="d-grid gap-2 col-3 mx-auto">
               <a
-                className="btn btn-outline-primary float-center"
+                className="btnFillFom"
                 id="load-more"
                 onClick={() => loadMore()}
               >

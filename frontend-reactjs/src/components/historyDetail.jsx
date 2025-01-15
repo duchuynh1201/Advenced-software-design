@@ -103,8 +103,8 @@ const HistoryDetail = () => {
 
   return (
     <>
-      <div className="detail d-none" id="detail">
-        <div className="h1 text-center">Detail Ticket</div>
+      <div className="detail d-none history-list" id="detail">
+        <div className="titleHis">Detail Ticket</div>
         <table className="table table-hover table-striped" id="detail-ticket">
           <tbody>
             <tr style={{ minHeight: "50px" }}>
@@ -178,17 +178,17 @@ const HistoryDetail = () => {
             </tr>
           </tbody>
         </table>
-        <div className="mt-5 row justify-content-center align-items-center">
+        <div className="listBTN">
           <button
             type="button"
-            className="col-md-3 col-6 btn btn-primary py-3 px-4 my-4"
+            className="btnShowForm"
             onClick={() => navigate("/history")}
           >
             Back
           </button>
           <button
             type="button"
-            className="col-md-3 col-6 btn btn-primary py-3 px-4 mx-4 d-none"
+            className="btnShowForm"
             id="discard"
             style={{ display: isDiscard ? "block" : "none" }}
             onClick={() => handleDiscard()}
