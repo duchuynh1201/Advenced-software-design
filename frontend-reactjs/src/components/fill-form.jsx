@@ -33,6 +33,7 @@ const FillForm = () => {
   const handleSubmitForm = async () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const email = userInfo.user.email;
+    const token = userInfo.token.token;
     const busId = getUrlParameter("bus-operator");
     console.log("BUSOP", busId);
     console.log("EMAIL", email);
@@ -202,38 +203,36 @@ const FillForm = () => {
         document.querySelector(".home-btn").addEventListener("click", () => {
           window.location.href = "/";
         });
-        document
-          .getElementById("pay-btn")
-          .addEventListener("click", async () => {
-            document.getElementById("status-td").textContent = "Paid";
-            try {
-              const paymentResponse = await fetch(
-                `${import.meta.env.VITE_BACKEND_URL}/ticket/payment`,
-                {
-                  method: "POST",
-                  headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${userInfo.token.token}`,
-                  },
-                  body: JSON.stringify({
-                    ticket_ids: data.ticket_ids,
-                  }),
-                }
-              );
-              const paymentData = await paymentResponse.json();
-              console.log("[SUCCESS]", paymentData);
+        document.getElementById("pay-btn").addEventListener("click", async () => {
+          document.getElementById("status-td").textContent = "Paid";
+          try {
+            const paymentResponse = await fetch(
+              `${import.meta.env.VITE_BACKEND_URL}/ticket/payment`,
+              {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                  ticket_ids: data.ticket_ids,
+                }),
+              }
+            );
+            const paymentData = await paymentResponse.json();
+            console.log("[SUCCESS]", paymentData);
 
-              localStorage.removeItem("url");
+            localStorage.removeItem("url");
 
-              // navigate('/payment-success');
-              setIsPayment(true);
-              setIsDisabled(false);
-            } catch (error) {
-              console.log(error);
-              alert("[ERROR]", "Payment failed");
-            }
-          });
+            // navigate('/payment-success');
+            setIsPayment(true);
+            setIsDisabled(false);
+          } catch (error) {
+            console.log(error);
+            alert("[ERROR]", "Payment failed");
+          }
+        });
       }
     } catch (error) {
       console.log(error);
@@ -415,6 +414,7 @@ const FillForm = () => {
         >
           <button
             type="button"
+            className="home-btn"
             style={{
               marginRight: "20px",
               padding: "10px 20px",
