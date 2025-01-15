@@ -257,31 +257,50 @@ const BusList = () => {
   }
 
   return (
-    <>
-      <div>
-        <Search />
-      </div>
-      <div className="flex mt-5 row">
-        <div className="col-3">
-          <div className="card">
+    <div className="bodyBus">
+      <Search corlorBorder="#DEE2E6" width="100%" />
+      <div className="mainBody">
+        <div className="mainLeft">
+          <div
+            className="card"
+            style={{
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            }}
+          >
             <div className="card-header">Filter</div>
             <div className="card-body">
               <div className="mb-3">
                 <label
                   htmlFor="exampleFormControlInput1"
                   className="form-label fw-bold"
+                  style={{
+                    display: "inline-block",
+                    paddingBottom: "10px",
+                    fontWeight: "600",
+                  }}
                 >
                   Bus Operator
                 </label>
                 <Select
                   id="filter-bus-operator"
                   options={options}
-                  onChange={selectedOption => setBusOperator(selectedOption.value)} // Add onChange handler
+                  placeholder="Select Menu"
+                  onChange={selectedOption =>
+                    setBusOperator(selectedOption.value)
+                  } // Add onChange handler
                 />
               </div>
               <div className="mb-3">
                 <div className="mb-3">
-                  <label htmlFor="typeOfSeat" className="form-label fw-bold">
+                  <label
+                    htmlFor="typeOfSeat"
+                    className="form-label fw-bold"
+                    style={{
+                      display: "inline-block",
+                      // paddingBottom: "10px",
+                      fontWeight: "600",
+                    }}
+                  >
                     Types of seat
                   </label>
                   <div className="form-check">
@@ -329,9 +348,22 @@ const BusList = () => {
                   <label
                     htmlFor="filter-pricing"
                     className="form-label fw-bold"
+                    style={{ fontWeight: "600", fontSize: "16px" }}
                   >
                     Pricing (
-                    <span id="current-pricing">{formatCurrency(pricing)}</span>)
+                    <span
+                      id="current-pricing"
+                      style={{
+                        fontWeight: "bold",
+                        color: "#EB7878",
+                        fontSize: "16px",
+                      }}
+                    >
+                      {pricing
+                        ? formatCurrency(pricing)
+                        : "Picking price you want"}
+                    </span>
+                    )
                   </label>
 
                   <input
@@ -342,22 +374,50 @@ const BusList = () => {
                     step="10000"
                     className="form-range"
                     id="filter-pricing"
+                    style={{ margin: "0px" }}
                     onChange={handlePricingChange} // Add onChange handler
                   />
 
-                  <div className="d-flex justify-content-between">
-                    <span className="fw-bold text-black-50">
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <span
+                      className="fw-bold text-black-50"
+                      style={{
+                        fontWeight: "bold",
+                        color: "#EB7878",
+                        fontSize: "16px",
+                      }}
+                    >
                       {formatCurrency(0)}
                     </span>
-                    <span className="fw-bold text-black-50">
+                    <span
+                      className="fw-bold text-black-50"
+                      style={{
+                        fontWeight: "bold",
+                        color: "#EB7878",
+                        fontSize: "16px",
+                      }}
+                    >
                       {formatCurrency(100000)}
                     </span>
                   </div>
                 </div>
-                <div className="d-grid gap-2 col-6 mx-auto">
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <button
                     id="filter"
-                    className="btn btn-primary float-center"
+                    className="btn btn-primary float-center btnLogin"
                     // onClick={handleSubmitFilter}
                   >
                     Submit
@@ -367,24 +427,21 @@ const BusList = () => {
             </div>
           </div>
         </div>
-        <div className="col-9">
-          <div className="list-of-buses">
+        <div className="mainRight">
+          <div className="list-of-buses" style={{ width: "100%" }}>
             {busTickets.map((ticket, index) => {
-              return (
-                <BusTicket 
-                  key={index}
-                  ticket={ticket}
-                />
-              );
+              return <BusTicket key={index} ticket={ticket} />;
             })}
           </div>
 
           <div className="d-grid gap-2 col-6 mx-auto">
-            <a className='btn btn-outline-primary float-center' id="load-more">Load more</a>
+            <a className="loadMore" id="load-more">
+              Load more
+            </a>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
