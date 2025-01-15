@@ -1,4 +1,4 @@
-FROM node:20.6.1-slim
+FROM node:22.13.0-slim
 
 # Install Google Chrome Stable and fonts
 # Note: this installs the necessary libs to make the browser work with Puppeteer.

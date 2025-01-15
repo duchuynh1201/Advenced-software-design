@@ -1,12 +1,43 @@
 // import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import printJS from "print-js";
 
 const FillForm = () => {
   // const navigate = useNavigate();
-
+  const [dataBus, setDataBus] = useState({});
   const [isPayment, setIsPayment] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const email = userInfo.user.email;
+  const token = userInfo.token.token;
+  const busId = getUrlParameter("bus-operator");
+
+  const getInfoBus = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/bus/${busId}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (!data) {
+        alert("[ERROR]: Cannot get response from server");
+      } else if (data.error) {
+        alert("[ERROR]: " + data.error);
+      } else {
+        setDataBus(data);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+    }
+  };
+
+  useEffect(() => {
+    getInfoBus();
+    // console.log("DATA BUS", dataBus);
+  }, [dataBus]);
 
   const handleCancel = () => {
     window.location.href = window.localStorage.getItem("url");
@@ -31,10 +62,6 @@ const FillForm = () => {
   }
 
   const handleSubmitForm = async () => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    const email = userInfo.user.email;
-    const token = userInfo.token.token;
-    const busId = getUrlParameter("bus-operator");
     console.log("BUSOP", busId);
     console.log("EMAIL", email);
     const name = document.getElementById("inputFullName").value;
@@ -288,7 +315,7 @@ const FillForm = () => {
               className="form-control bg-secondary text-light"
               id="disabledEmail"
               name="disabledEmail"
-              value="example@gmail.com"
+              value={email ? email : "example@gmail.com"}
             />
           </div>
           <div className="form-group rowfill">
@@ -315,7 +342,18 @@ const FillForm = () => {
               className="form-control bg-secondary text-light"
               id="disabledStartTime"
               name="disabledStartTime"
-              value="February 11th, 2022 15:00"
+              value={
+                dataBus.start_time
+                  ? new Date(dataBus.start_time).toLocaleDateString(undefined, {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                    })
+                  : "February 11th, 2022 18:00"
+              }
             />
           </div>
           <div className="form-group rowfill">
@@ -328,7 +366,18 @@ const FillForm = () => {
               className="form-control bg-secondary text-light"
               id="disabledEndTime"
               name="disabledEndTime"
-              value="February 11th, 2022 20:00"
+              value={
+                dataBus.end_time
+                  ? new Date(dataBus.end_time).toLocaleDateString(undefined, {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                    })
+                  : "February 11th, 2022 20:00"
+              }
             />
           </div>
           <div className="form-group rowfill">
@@ -341,7 +390,11 @@ const FillForm = () => {
               className="form-control bg-secondary text-light"
               id="destination"
               name="destination"
-              value="Hà Nội"
+              value={
+                dataBus.bus_stations_buses_end_pointTobus_stations?.location
+                  ? dataBus.bus_stations_buses_end_pointTobus_stations?.location
+                  : "Hà Nội"
+              }
             />
           </div>
           <div className="form-group rowfill">

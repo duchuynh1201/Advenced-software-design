@@ -10,10 +10,10 @@ services:
   frontend:
     image: my_frontend
     environment:
-      - BACKEND_URL=http://localhost:3000/v1
-      - GG_CLIENT_ID=669935704831-l3b2tmvde6esb62gulin3eusrj32mqca.apps.googleusercontent.com
+      - VITE_BACKEND_URL=http://localhost:3000/v1
+      - VITE_GG_CLIENT_ID=669935704831-l3b2tmvde6esb62gulin3eusrj32mqca.apps.googleusercontent.com
     ports:
-      - '4000:4000'
+      - '80:80'
   amdin:
     image: my_admin
     environment:

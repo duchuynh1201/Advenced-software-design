@@ -1,7 +1,7 @@
 import Select from "react-select";
 import { useEffect, useState } from "react";
 
-import BusTicket from "./busTicket.jsx";
+import BusTicket from "./bus-ticket.jsx";
 import Search from "./search.jsx";
 // import BusDetail from "./busDetail.jsx";
 // import Card from "react-bootstrap/Card";

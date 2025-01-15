@@ -188,7 +188,7 @@ return (
               Sign In
             </button>
             <GoogleButton
-              onClick={() => window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&response_type=token&redirect_uri=http://localhost:5173/loginWithGoogle&client_id=${import.meta.env.VITE_GG_CLIENT_ID}`}
+              onClick={() => window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&response_type=token&redirect_uri=http://localhost:4000/loginWithGoogle&client_id=${import.meta.env.VITE_GG_CLIENT_ID}`}
             />
           </form>
         </div>

@@ -10,11 +10,11 @@ import { useEffect, useState } from "react";
 import History from "./history.jsx";
 import OTPInput from "./otp.jsx";
 import HomePage from "./home.jsx";
-import LoginForm from "./loginForm.jsx";
-import BusList from "./busList.jsx";
+import LoginForm from "./login.jsx";
+import BusList from "./list.jsx";
 import FillForm from "./fill-form.jsx";
-import BusDetail from "./busDetail.jsx";
-import HistoryDetail from "./historyDetail.jsx";
+import BusDetail from "./bus-detail.jsx";
+import HistoryDetail from "./history-detail.jsx";
 import LoginWithGoogle from "./loginWithGoogle.jsx";
 
 const Navigation = () => {
