@@ -15,6 +15,7 @@ import BusList from "./busList.jsx";
 import FillForm from "./fill-form.jsx";
 import BusDetail from "./busDetail.jsx";
 import HistoryDetail from "./historyDetail.jsx";
+import LoginWithGoogle from "./loginWithGoogle.jsx";
 
 const Navigation = () => {
   const [isLogIn, setIsLogIn] = useState(false);
@@ -91,6 +92,7 @@ const Navigation = () => {
             <Route exact path="/fill-form" element={<FillForm />} />
             <Route exact path="/bus-detail" element={<BusDetail />} />
             <Route exact path="/history-detail" element={<HistoryDetail />} />
+            <Route exact path="/loginWithGoogle" element={<LoginWithGoogle />} />
           </Routes>
         </div>
       </BrowserRouter>
