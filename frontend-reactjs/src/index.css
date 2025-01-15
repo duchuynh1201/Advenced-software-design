@@ -64,6 +64,47 @@ h1 {
   line-height: 1.1;
 }
 
+.formSearch {
+  padding: 20px 40px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  /* align-items: center; */
+}
+
+.f1 {
+  width: 100%;
+}
+
+.react-datepicker-wrapper {
+  width: calc(100% - 45px);
+}
+
+.custom-datepicker {
+  width: 100%;
+  /* width: calc(100% - 45px) ; */
+  border-radius: 5px;
+  border: 1px solid #d5d7d7;
+  outline: none;
+  background-color: #ffffff;
+  /* Thêm các thuộc tính CSS khác nếu cần */
+}
+
+.setDate {
+  width: 100%;
+  display: flex;
+  gap: 2px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btnLogin:hover {
+  background-color: rgb(51, 184, 56);
+  color: white;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;

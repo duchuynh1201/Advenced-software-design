@@ -31,7 +31,7 @@ const HomePage = () => {
             Reach For The Travel Easier <br></br>And More Enjoyable
           </h1>
         </main>
-        <Search />
+        <Search corlorBorder="#17A2B8" width="1056px" />
       </div>
     </>
   );
