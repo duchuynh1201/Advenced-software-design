@@ -43,8 +43,13 @@ const Navigation = () => {
   return (
     <>
       <BrowserRouter>
-        <div className="fixed top-0 left-0 right-0 bg-white border-gray-200 dark:bg-gray-900 z-50">
-          <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div
+          className="fixed top-0 left-0 right-0 bg-white border-gray-200 dark:bg-gray-900 z-50"
+          style={{
+            boxShadow: "0px 8px 24px 0px rgba(140, 149, 159, 0.2)",
+          }}
+        >
+          <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-6">
             <a
               href="/"
               className="flex items-center space-x-3 rtl:space-x-reverse"
@@ -53,10 +58,10 @@ const Navigation = () => {
                 Vexere
               </span>
             </a>
-            <div className="flex flex-row">
+            <div className="flex flex-row gap-5">
               <NavLink
                 to={`${isLogIn ? "/history" : "/login"}`}
-                className="block ml-7 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                className="btnLogin"
                 aria-current="page"
               >
                 {isLogIn ? "History" : "Log In"}
@@ -65,7 +70,7 @@ const Navigation = () => {
                 <NavLink
                   to="/"
                   onClick={handleLogOut}
-                  className="block ml-7 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                  className="btnLogin"
                   aria-current="page"
                 >
                   Log out

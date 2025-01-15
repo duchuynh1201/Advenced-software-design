@@ -79,6 +79,7 @@ const FillForm = () => {
           else return days + " Days";
         };
         const ticketIds = data.ticket_ids.map(tid => `<li>${tid}</li>`);
+        console.log("TICKETIDS", data);
         const template = `<div>
             <div id="table">
                 <table class='table table-hover table-striped'>
